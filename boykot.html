@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boykot Rehberi</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-color: #ecf0f1;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeInDown 1s ease;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10.5%),
+                        radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10.5%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            transform: rotate(45deg);
+            animation: backgroundMove 60s linear infinite;
+            opacity: 0.3;
+        }
+        
+        .search-container {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        
+        #search-input {
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+        }
+        
+        #search-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        
+        #search-button:hover {
+            background-color: #2980b9;
+        }
+        
+        #search-results {
+            padding: 1rem 0;
+            text-align: center;
+            min-height: 50px;
+        }
+        
+        .brands-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 1rem 0;
+        }
+        
+        .brand-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .brand-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .brand-card p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .detail-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color var(--transition-speed);
+            cursor: pointer;
+        }
+        
+        .detail-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .footer-info {
+            background-color: var(--light-color);
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .footer-info h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-info p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity var(--transition-speed);
+        }
+        
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: all var(--transition-speed);
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+        
+        .modal-title {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .not-found {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            margin: 1rem 0;
+            animation: shake 0.5s ease;
+        }
+        
+        /* Animasyonlar */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes backgroundMove {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .brand-card {
+            animation-fill-mode: both;
+        }
+        
+        .brand-card:nth-child(1) { animation-delay: 0.1s; }
+        .brand-card:nth-child(2) { animation-delay: 0.2s; }
+        .brand-card:nth-child(3) { animation-delay: 0.3s; }
+        .brand-card:nth-child(4) { animation-delay: 0.4s; }
+        .brand-card:nth-child(5) { animation-delay: 0.5s; }
+        .brand-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Boykot Rehberi</h1>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Boykot Marka adı arayın...">
+                <button id="search-button">Ara</button>
+            </div>
+        </div>
+        
+        <div id="search-results"></div>
+        
+        <div class="brands-container" id="brands-list">
+            <!-- Markalar JavaScript ile buraya eklenecek -->
+        </div>
+        
+        <div class="footer-info">
+            <h2>Marka Veritabanımız Hakkında</h2>
+            <p>
+                Boykot Marka rehberimiz yeni boykot markalar geldiği müddetçe sürekli güncellenecektir. Burada bulabileceğiniz markalar, neden boykot edildikleri hakkında detaylı bilgiler, 
+                ve sektördeki konumları hakkında bilgiler edinebilirsiniz. Eksik gördüğünüz markalar için bizimle iletişime geçebilirsiniz.
+                Amacımız, adaletli olmayıp, hükümet yanlısı olan bu markaları boykot eden şahısların hangi markaları boykot edeceklerini bulmalarında yardım sağlamaktır.
+            </p>
+        </div>
+    </main>
+
+<div class="email-contact-section">
+  <div class="email-card">
+    <div class="card-content">
+      <div class="email-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32">
+          <path fill="currentColor" d="M20,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V6C22,4.9,21.1,4,20,4z M20,8l-8,5L4,8V6l8,5l8-5V8z"/>
+        </svg>
+      </div>
+      <div class="email-info">
+        <span class="info-label">E-Posta Adresimiz</span>
+        <span id="email-text">boykotrehberi@proton.me</span>
+      </div>
+      <button id="copy-email-btn" class="copy-btn">
+        <span class="btn-default-text">Kopyala</span>
+        <span class="btn-success-text">
+          <svg class="check-icon" viewBox="0 0 24 24" width="16" height="16">
+            <path fill="currentColor" d="M9,16.17L4.83,12l-1.42,1.41L9,19L21,7l-1.41-1.41L9,16.17z"/>
+          </svg>
+          Kopyalandı
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.email-contact-section {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.email-card {
+  width: 90%;
+  max-width: 550px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(110, 142, 251, 0.3), 0 6px 20px rgba(167, 119, 227, 0.2);
+  overflow: hidden;
+  padding: 5px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.email-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(110, 142, 251, 0.4), 0 8px 25px rgba(167, 119, 227, 0.3);
+}
+
+.card-content {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.email-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(110, 142, 251, 0.3);
+}
+
+.email-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e8efb;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#email-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy-btn {
+  background: #f2f5ff;
+  border: none;
+  height: 46px;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  color: #6e8efb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: #e6eaff;
+}
+
+.btn-success-text {
+  display: none;
+  color: #22c55e;
+}
+
+.check-icon {
+  margin-right: 4px;
+}
+
+.copy-btn.success .btn-default-text {
+  display: none;
+}
+
+.copy-btn.success .btn-success-text {
+  display: flex;
+  align-items: center;
+}
+
+.copy-btn.success {
+  background-color: #ecfdf5;
+  color: #22c55e;
+}
+
+@media (max-width: 600px) {
+  .card-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .email-icon {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .copy-btn {
+    margin-left: 0;
+    margin-top: 15px;
+    width: 100%;
+  }
+  
+  #email-text {
+    font-size: 16px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(110, 142, 251, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(110, 142, 251, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 142, 251, 0);
+  }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const copyBtn = document.getElementById('copy-email-btn');
+  const emailText = document.getElementById('email-text');
+  
+  copyBtn.addEventListener('click', function() {
+    navigator.clipboard.writeText(emailText.textContent)
+      .then(() => {
+        copyBtn.classList.add('success');
+        
+        // Animasyon efekti ekle
+        emailText.style.color = '#22c55e';
+        
+        setTimeout(() => {
+          copyBtn.classList.remove('success');
+          emailText.style.color = '#333';
+        }, 2000);
+      })
+      .catch(err => {
+        console.error('Kopyalama başarısız oldu:', err);
+      });
+  });
+  
+  // Hoş bir pulse animasyonu ekleyerek dikkat çekelim
+  setTimeout(() => {
+    copyBtn.classList.add('pulse');
+    setTimeout(() => {
+      copyBtn.classList.remove('pulse');
+    }, 3000);
+  }, 1000);
+});
+</script>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title" class="modal-title"></h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Marka veritabanı
+        const brandsDatabase = [
+    {
+        id: 1,
+        name: "Espressolab",
+        description: "Kahve zinciri.",
+        details: "Kadir Topbaş'ın oğlu ile ortaklık. Hükümet yanlısı."
+    },
+    {
+        id: 2,
+        name: "Kahve Dünyası",
+        description: "Türk kahve zinciri.",
+        details: "Ankara'da protestocuları içeri almadı."
+    },
+    {
+        id: 3,
+        name: "İddaa",
+        description: "Türkiye'nin resmi spor bahis kuruluşu.",
+        details: "2019 yılında, Demirören Holding iştiraki olan Şans Girişim Ortak Girişimi, Spor Toto Teşkilat Başkanlığı ile yaptığı 10 yıllık sözleşme kapsamında İddaa'nın işletmesini devralmıştır. Misli, Bilyoner, Nesine, Tuttur, Birebin, Oley İddaa'nın alt kuruluşları sayılabilir. Bu sitelerden edilen kârdan iddaa pay almaktadır."
+    },
+    {
+        id: 4,
+        name: "D-smart",
+        description: "Dijital yayın platformu.",
+        details: "Demirören Holdinge aittir."
+    },
+    {
+        id: 5,
+        name: "Şok Market",
+        description: "Zincir market.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 6,
+        name: "Seç Market",
+        description: "Zincir market.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 7,
+        name: "Migros",
+        description: "Zincir süpermarket.",
+        details: "Hükümet yanlısı Anadolu Gruba ait."
+    },
+    {
+        id: 8,
+        name: "Kilim Mobilya",
+        description: "Mobilya üreticisi.",
+        details: "Demirören Holdinge aittir."
+    },
+    {
+        id: 9,
+        name: "D&R",
+        description: "Kitap ve kültür ürünleri mağaza zinciri.",
+        details: "D&R, 2018'de Turkuvaz Grubu'na satılmıştır. Turkuvaz Grubu, Sabah gazetesi ve A Haber gibi medya kuruluşlarını da bünyesinde barındırmaktadır. Bu grup hükümete yakınlığıyla bilinmektedir."
+    },
+    {
+        id: 10,
+        name: "Gebze Center",
+        description: "Alışveriş merkezi.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 11,
+        name: "İdefix",
+        description: "Online kitap ve kültür ürünleri satış platformu.",
+        details: "Turkuaz Medya Grubuna aittir."
+    },
+    {
+        id: 12,
+        name: "Ülker",
+        description: "Gıda üreticisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 13,
+        name: "HIQ Nutrition",
+        description: "Beslenme ve sporcu gıdaları markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 14,
+        name: "FLO",
+        description: "Ayakkabı perakende zinciri.",
+        details: "Ülker ve BİM ortaklığı şirketi."
+    },
+    {
+        id: 15,
+        name: "Emirgan Sütiş",
+        description: "Restoran zinciri.",
+        details: "Espressolab ile sahipleri aynı."
+    },
+    {
+        id: 16,
+        name: "Mado",
+        description: "Dondurma ve tatlı ürünleri zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 17,
+        name: "AJet",
+        description: "Havayolu şirketi.",
+        details: "Türk hava yollarına ait."
+    },
+    {
+        id: 18,
+        name: "ETS Tur",
+        description: "Turizm ve seyahat acentesi.",
+        details: "Kültür ve Turizm Bakanına aittir."
+    },
+    {
+        id: 19,
+        name: "Fotomaç",
+        description: "Spor gazetesi.",
+        details: "Turkuaz Medya Grubuna aittir."
+    },
+    {
+        id: 20,
+        name: "NBA TV",
+        description: "Basketbol yayın kanalı.",
+        details: "Türkiye yayın hakları Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 21,
+        name: "İhlas Holding",
+        description: "Çeşitli sektörlerde faaliyet gösteren holding.",
+        details: "Hükümete olan yakınlığı bilinen holding. İhlas Ev Aletleri ve İhlas Medya Grubu gibi İhlas Holding'e bağlı markalar yer almaktadır."
+    },
+    {
+        id: 22,
+        name: "Faruk Güllüoğlu",
+        description: "Baklava ve tatlı üreticisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 23,
+        name: "CNN Türk",
+        description: "Haber kanalı.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 24,
+        name: "Bereket Döner",
+        description: "Fast food zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 25,
+        name: "Exxen",
+        description: "Dijital içerik platformu.",
+        details: "Tepkisizlik & Hükümet yanlısı."
+    },
+    {
+        id: 26,
+        name: "Burcu Salça",
+        description: "Konserve ve salça üreticisi.",
+        details: "Sahibi Müjdat Bahadır AKP meclis üyesi."
+    },
+    {
+        id: 27,
+        name: "Kanal D",
+        description: "Televizyon kanalı.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 28,
+        name: "Simit Sarayı",
+        description: "Simit ve unlu mamüller zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 29,
+        name: "Watson",
+        description: "Kozmetik ve kişisel bakım mağaza zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 30,
+        name: "Atasay Kuyumculuk",
+        description: "Kuyumculuk markası.",
+        details: "Ortakları arasında AKP'li Abdülkadir Emin Önen yer alıyor."
+    },
+    {
+        id: 31,
+        name: "Kemer Country Hotel & Club",
+        description: "Otel ve kulüp tesisi.",
+        details: "Demirören Holdinge aittir."
+    },
+    {
+        id: 32,
+        name: "Kızılkayalar",
+        description: "Fast food zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 33,
+        name: "Bein Sports",
+        description: "Spor yayın platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 34,
+        name: "Mubi",
+        description: "Film streaming platformu.",
+        details: "Tepkisizlik."
+    },
+    {
+        id: 35,
+        name: "Teve2",
+        description: "Televizyon kanalı.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 36,
+        name: "Vestel",
+        description: "Elektronik ve beyaz eşya üreticisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 37,
+        name: "Hürriyet",
+        description: "Gazete.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 38,
+        name: "Çaykur",
+        description: "Çay üreticisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 39,
+        name: "Posta",
+        description: "Gazete.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 40,
+        name: "Turkcell",
+        description: "Telekomünikasyon şirketi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 41,
+        name: "Denizbank",
+        description: "Banka.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 42,
+        name: "Efes",
+        description: "Bira markası.",
+        details: "Hükümet yanlısı Anadolu Gruba ait."
+    },
+    {
+        id: 43,
+        name: "Violet Mobilya",
+        description: "Mobilya üreticisi.",
+        details: "Espressolab gönderisine yapılan yorum."
+    },
+    {
+        id: 44,
+        name: "Kamil Koç",
+        description: "Otobüs firması.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 45,
+        name: "İstikbal",
+        description: "Mobilya markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 46,
+        name: "Sleepy",
+        description: "Bebek bezi markası.",
+        details: "Eski akp gaziantep akp il başkan yardımcısı ve akp 28.dönem milletvekili aday adayına ait."
+    },
+    {
+        id: 47,
+        name: "Milliyet",
+        description: "Gazete.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 48,
+        name: "File Market",
+        description: "Süpermarket zinciri.",
+        details: "Sahibi BİM."
+    },
+    {
+        id: 49,
+        name: "Milli Piyango",
+        description: "Ulusal piyango kuruluşu.",
+        details: "Demirören Medya Grubuna aittir."
+    },
+    {
+        id: 50,
+        name: "NTV",
+        description: "Haber kanalı.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 51,
+        name: "Regal",
+        description: "Elektronik cihaz markası.",
+        details: "Hükümet yanlısı Zorlu Grubuna aittir."
+    },
+    {
+        id: 52,
+        name: "TV8",
+        description: "Televizyon kanalı.",
+        details: "Tepkisizlik & Hükümet yanlısı."
+    },
+    {
+        id: 53,
+        name: "Türkiye Petrolleri",
+        description: "Petrol şirketi.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 54,
+        name: "Türk Hava Yolları",
+        description: "Havayolu şirketi.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 55,
+        name: "Türkiye Sigorta",
+        description: "Sigorta şirketi.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 56,
+        name: "Dream TV",
+        description: "Müzik kanalı.",
+        details: "Demirören Holdinge aittir."
+    },
+    {
+        id: 57,
+        name: "Puhu TV",
+        description: "Dijital içerik platformu.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 58,
+        name: "Demirören İstiklal AVM",
+        description: "Alışveriş merkezi.",
+        details: "Demirören Holdinge aittir."
+    },
+    {
+        id: 59,
+        name: "Galataport İstanbul",
+        description: "Liman ve AVM kompleksi.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 60,
+        name: "Star TV",
+        description: "Televizyon kanalı.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 61,
+        name: "Kral TV & Kral FM",
+        description: "Müzik kanalı ve radyo istasyonu.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 62,
+        name: "GQ Dergisi",
+        description: "Erkek moda dergisi.",
+        details: "Hükümet yanlısı Doğuş Grubuna aittir."
+    },
+    {
+        id: 63,
+        name: "GZT",
+        description: "Dijital haber platformu.",
+        details: "Hükümet yanlısı Albayrak Grubuna aittir."
+    },
+    {
+        id: 64,
+        name: "Tümosan",
+        description: "Motor ve traktör üreticisi.",
+        details: "Hükümet yanlısı Albayrak Grubuna aittir."
+    },
+    {
+        id: 65,
+        name: "Türkiye Hastanesi",
+        description: "Özel hastane.",
+        details: "Hükümet yanlısı İhlas Holdinge aittir."
+    },
+    {
+        id: 66,
+        name: "Kargom Sende",
+        description: "Kargo şirketi.",
+        details: "Turkuaz Grubuna aittir."
+    },
+    {
+        id: 67,
+        name: "U.S. Polo Assn",
+        description: "Giyim markası.",
+        details: "Sahibi Şeref Safa bizzat Erdoğan tarafından TMSF kuruluna atandı. (*Aydınlı Grup)"
+    },
+    {
+        id: 68,
+        name: "COOKSHOP",
+        description: "Mutfak gereçleri mağazası.",
+        details: "Hükümet yanlısı Kazancı Holding'e aittir."
+    },
+    {
+        id: 69,
+        name: "Eve Kozmetik Mağazaları",
+        description: "Kozmetik ürünleri zinciri.",
+        details: "Sahibi A101'in de sahibi olan Turgut Aydın Holding."
+    },
+    {
+        id: 70,
+        name: "Medipol Hastanesi",
+        description: "Özel hastane zinciri.",
+        details: "Eski AKP'li sağlık bakanına ait."
+    },
+    {
+        id: 71,
+        name: "TGRT",
+        description: "Televizyon kanalı.",
+        details: "Hükümet yanlısı İhlas Holdinge aittir."
+    },
+    {
+        id: 72,
+        name: "Memorial Hastanesi",
+        description: "Özel hastane zinciri.",
+        details: "Kurucusu Turgut Aydın AKP'li."
+    },
+    {
+        id: 73,
+        name: "Medical Park Hastanesi",
+        description: "Özel hastane zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 74,
+        name: "Liv Hospital",
+        description: "Özel hastane zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 75,
+        name: "Erdem Hastanesi",
+        description: "Özel hastane.",
+        details: "Metin Külünk'e aittir."
+    },
+    {
+        id: 76,
+        name: "Dünyagöz",
+        description: "Göz sağlığı hastanesi zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 77,
+        name: "Bein Connect",
+        description: "Dijital içerik platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 78,
+        name: "BİM",
+        description: "İndirim market zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 79,
+        name: "A101",
+        description: "İndirim market zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 80,
+        name: "Zorlu Center",
+        description: "Alışveriş merkezi ve yaşam alanı.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 81,
+        name: "Zorlu",
+        description: "Holding şirketi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 82,
+        name: "TAÇ",
+        description: "Ev tekstili markası.",
+        details: "Hükümet yanlısı Zorlu Holding'a aittir."
+    },
+    {
+        id: 83,
+        name: "Pierre Cardin Türkiye",
+        description: "Giyim markası.",
+        details: "Hükümet yanlısı Zorlu Holding'a aittir."
+    },
+    {
+        id: 84,
+        name: "ATV",
+        description: "Televizyon kanalı.",
+        details: "Turkuaz Medya Grubuna aittir."
+    },
+    {
+        id: 85,
+        name: "Sinehane",
+        description: "Film platformu.",
+        details: "Turkuaz Medya Grubuna aittir."
+    },
+    {
+        id: 86,
+        name: "Godiva",
+        description: "Çikolata markası.",
+        details: "Yıldız Holdinge aittir. (*Murat Ülker)"
+    },
+    {
+        id: 87,
+        name: "Karacakaya Su",
+        description: "Su markası.",
+        details: "Sahibi ve yöneticileri AKP yönetimlerindedir. Tüm su bayileri AKP ilçe yöneticilerinden oluşuyor."
+    },
+    {
+        id: 88,
+        name: "Doruk Hastaneleri",
+        description: "Özel hastane zinciri.",
+        details: "Sahibi AKP milletvekili Mustafa Esgin'dir."
+    },
+    {
+        id: 89,
+        name: "Pizza Lazza",
+        description: "Fast food zinciri.",
+        details: "Sahibi A101'in de sahibi olan Turgut Aydın Holding."
+    },
+    {
+        id: 90,
+        name: "English Home",
+        description: "Ev tekstili markası.",
+        details: "Türkiye distribütörü Turgut Aydın Holding."
+    },
+    {
+        id: 91,
+        name: "Bellona",
+        description: "Mobilya markası.",
+        details: "TMSF yönetim kurulunda olan Yusuf Öksüzömer'e aittir. (*Erciyes Anadolu Holding)"
+    },
+    {
+        id: 92,
+        name: "Mondihome",
+        description: "Mobilya markası.",
+        details: "TMSF yönetim kurulunda olan Yusuf Öksüzömer'e aittir. (*Erciyes Anadolu Holding)"
+    },
+    {
+        id: 93,
+        name: "PTT",
+        description: "Posta ve telgraf teşkilatı.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 94,
+        name: "Ziraat Bankası",
+        description: "Banka.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 95,
+        name: "Halkbank",
+        description: "Banka.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 96,
+        name: "Vakıfbank",
+        description: "Banka.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 97,
+        name: "Türk Telekom",
+        description: "Telekomünikasyon şirketi.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 98,
+        name: "Binbin",
+        description: "Mikro mobilite paylaşım platformu.",
+        details: "Kurucu ortağı Erdoğanın yeğeni."
+    },
+    {
+        id: 99,
+        name: "FURPA",
+        description: "Mobilya markası.",
+        details: "Sahibi AKP'li."
+    },
+    {
+        id: 100,
+        name: "SunExpress",
+        description: "Havayolu şirketi.",
+        details: "Türk hava yollarına ait."
+    },
+    {
+        id: 101,
+        name: "Molfix",
+        description: "Bebek bezi markası.",
+        details: "AKP'ye yakın Hayat Holdinge aittir."
+    },
+    {
+        id: 102,
+        name: "Bingo",
+        description: "Temizlik ürünleri markası.",
+        details: "AKP'ye yakın Hayat Holdinge aittir."
+    },
+    {
+        id: 103,
+        name: "Molped",
+        description: "Kadın hijyen ürünleri markası.",
+        details: "AKP'ye yakın Hayat Holdinge aittir."
+    },
+    {
+        id: 104,
+        name: "Papia",
+        description: "Kağıt ürünleri markası.",
+        details: "AKP'ye yakın Hayat Holdinge aittir."
+    },
+    {
+        id: 105,
+        name: "Familia",
+        description: "Kağıt ürünleri markası.",
+        details: "AKP'ye yakın Hayat Holdinge aittir."
+    },
+    {
+        id: 106,
+        name: "Tabii",
+        description: "Dijital içerik platformu.",
+        details: "TRT'ye aittir."
+    },
+    {
+        id: 107,
+        name: "Alkoçlar",
+        description: "Turizm ve otelcilik grubu.",
+        details: "AKP'li Hülya Koçyiğite aittir."
+    },
+    {
+        id: 108,
+        name: "Saray Muhallebicisi",
+        description: "Tatlı ve muhallebi zinciri.",
+        details: "Topbaş ailesine aittir."
+    },
+    {
+        id: 109,
+        name: "Maxx Royal Resorts",
+        description: "Lüks otel zinciri.",
+        details: "Kültür ve Turizm Bakanına aittir."
+    },
+    {
+        id: 110,
+        name: "Voyage",
+        description: "Otel zinciri.",
+        details: "Kültür ve Turizm Bakanına aittir."
+    },
+    {
+        id: 111,
+        name: "Komili",
+        description: "Zeytinyağı markası.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 112,
+        name: "SuperFresh",
+        description: "Dondurulmuş gıda markası.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 113,
+        name: "Mis",
+        description: "Süt ürünleri markası.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 114,
+        name: "Piyale",
+        description: "Makarna ve un ürünleri markası.",
+        details: "Yıldız Holdinge aittir."
+    },
+    {
+        id: 115,
+        name: "Vakıfbank",
+        description: "Banka.",
+        details: "Varlık Fonuna bağlı şirketler arasında."
+    },
+    {
+        id: 116,
+        name: "Trendyol",
+        description: "E-ticaret platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 117,
+        name: "Kiko",
+        description: "Kozmetik markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 118,
+        name: "Spor Toto",
+        description: "Bahis ve şans oyunları kuruluşu.",
+        details: "Devlet kurumu."
+    },
+    {
+        id: 119,
+        name: "Opet",
+        description: "Petrol şirketi.",
+        details: "Hükümet yanlısı Koç Holdinge ait."
+    },
+    {
+        id: 120,
+        name: "Kampanya Kardeşliği",
+        description: "Kampanya platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 121,
+        name: "Aygaz",
+        description: "LPG dağıtım şirketi.",
+        details: "Hükümet yanlısı Koç Holdinge ait."
+    },
+    {
+        id: 122,
+        name: "Beko",
+        description: "Beyaz eşya markası.",
+        details: "Hükümet yanlısı Koç Holdinge ait."
+    },
+    {
+        id: 123,
+        name: "MediaMarkt",
+        description: "Elektronik ürünler perakende zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 124,
+        name: "Starbucks Türkiye",
+        description: "Kahve zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 125,
+        name: "Gratis",
+        description: "Kozmetik mağaza zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 126,
+        name: "Pepsi Türkiye",
+        description: "İçecek markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 127,
+        name: "Kitapyurdu",
+        description: "Online kitap satış platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 128,
+        name: "Domino's Pizza",
+        description: "Pizza zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 129,
+        name: "Vatan Bilgisayar",
+        description: "Elektronik ürünler perakende zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 130,
+        name: "Panatone",
+        description: "Giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 131,
+        name: "Teknosa",
+        description: "Elektronik ürünler perakende zinciri.",
+        details: "Hükümet yanlısı Sabancı Holdinge ait."
+    },
+    {
+        id: 132,
+        name: "Sofra",
+        description: "Yemek dergisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 133,
+        name: "China Today",
+        description: "Dergi.",
+        details: "Hükümet yanlısı yayın."
+    },
+    {
+        id: 134,
+        name: "Sabittik",
+        description: "E-ticaret platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 135,
+        name: "Business Dergisi",
+        description: "İş dünyası dergisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 136,
+        name: "Popülist",
+        description: "Dijital medya platformu.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 137,
+        name: "Babylon",
+        description: "Konser ve etkinlik mekanı.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 138,
+        name: "Nusret",
+        description: "Et restoranları zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 139,
+        name: "Tofaş",
+        description: "Otomobil üreticisi.",
+        details: "Hükümet yanlısı Koç Holdinge ait."
+    },
+    {
+        id: 140,
+        name: "Doğtaş",
+        description: "Mobilya markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 141,
+        name: "Can Yayınları",
+        description: "Yayınevi.",
+        details: "Tepkisizlik."
+    },
+    {
+        id: 142,
+        name: "DeFacto",
+        description: "Giyim mağaza zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 143,
+        name: "ÖzdilekPark",
+        description: "Alışveriş merkezi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 144,
+        name: "Mavi",
+        description: "Giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 145,
+        name: "Beymen",
+        description: "Lüks giyim mağaza zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 146,
+        name: "Avşar",
+        description: "İçecek markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 147,
+        name: "Acıbadem Hastaneleri",
+        description: "Özel hastane zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 148,
+        name: "Dost Kafe",
+        description: "Kafe zinciri.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 149,
+        name: "Hummel Türkiye",
+        description: "Spor giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 150,
+        name: "Koton",
+        description: "Giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 151,
+        name: "Skechers Türkiye",
+        description: "Ayakkabı markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 152,
+        name: "Puma Türkiye",
+        description: "Spor giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 153,
+        name: "TRT",
+        description: "Devlet televizyon ve radyo kurumu.",
+        details: "Devlet kurumu."
+    },
+    {
+        id: 154,
+        name: "Bloomberg HT",
+        description: "Ekonomi haber kanalı.",
+        details: "Hükümet yanlısı Ciner Grubuna ait."
+    },
+    {
+        id: 155,
+        name: "Vodafone Türkiye",
+        description: "Telekomünikasyon şirketi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 156,
+        name: "Nike Türkiye",
+        description: "Spor giyim markası.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 157,
+        name: "Vogue Türkiye",
+        description: "Moda dergisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 158,
+        name: "GQ Türkiye",
+        description: "Erkek moda dergisi.",
+        details: "Hükümet yanlısı Doğuş Grubuna ait."
+    },
+    {
+        id: 159,
+        name: "Elle Türkiye",
+        description: "Kadın moda dergisi.",
+        details: "Hükümet yanlısı."
+    },
+    {
+        id: 160,
+        name: "Yapı Kredi",
+        description: "Banka.",
+        details: "Hükümet yanlısı Koç Holdinge ait."
+    }
+];
+        
+        // DOM elementlerini seçme
+        const brandsList = document.getElementById('brands-list');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const searchResults = document.getElementById('search-results');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Markaları listeleme fonksiyonu
+        function displayBrands(brands) {
+            brandsList.innerHTML = '';
+            
+            // Her bir marka için bir kart oluştur
+            brands.forEach(brand => {
+                const brandCard = document.createElement('div');
+                brandCard.className = 'brand-card';
+                
+                brandCard.innerHTML = `
+                    <h3>${brand.name}</h3>
+                    <p>${brand.description}</p>
+                    <button class="detail-button" data-id="${brand.id}">Detaylı</button>
+                `;
+                
+                brandsList.appendChild(brandCard);
+            });
+            
+            // Detay butonlarına tıklama olayını ekle
+            document.querySelectorAll('.detail-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const brandId = parseInt(this.getAttribute('data-id'));
+                    const brand = brandsDatabase.find(b => b.id === brandId);
+                    
+                    if (brand) {
+                        showModal(brand);
+                    }
+                });
+            });
+        }
+        
+        // Arama fonksiyonu
+        function searchBrands() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                displayBrands(brandsDatabase);
+                searchResults.innerHTML = '';
+                return;
+            }
+            
+            const results = brandsDatabase.filter(brand => 
+                brand.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="not-found">
+                        <p>"${searchInput.value}" ile ilgili marka bulunamadı.</p>
+                    </div>
+                `;
+                brandsList.innerHTML = '';
+            } else {
+                searchResults.innerHTML = `
+                    <p>"${searchInput.value}" için ${results.length} sonuç bulundu.</p>
+                `;
+                displayBrands(results);
+            }
+        }
+        
+        // Modal gösterme fonksiyonu
+        function showModal(brand) {
+            modalTitle.textContent = brand.name;
+            modalBody.innerHTML = `<p>${brand.details}</p>`;
+            modal.classList.add('show');
+        }
+        
+        // Sayfa yüklendiğinde tüm markaları göster
+        window.addEventListener('DOMContentLoaded', () => {
+            displayBrands(brandsDatabase);
+        });
+        
+        // Arama butonuna tıklama olayı
+        searchButton.addEventListener('click', searchBrands);
+        
+        // Enter tuşuna basılınca arama yapma
+        searchInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                searchBrands();
+            }
+        });
+        
+        // Modal kapatma
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        
+        // Modal dışına tıklayınca kapatma
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+        
+        // Yeni marka ekleme fonksiyonu
+        function addBrand(name, description, details) {
+            const newId = brandsDatabase.length > 0 ? 
+                          Math.max(...brandsDatabase.map(brand => brand.id)) + 1 : 1;
+            
+            const newBrand = {
+                id: newId,
+                name: name,
+                description: description,
+                details: details
+            };
+            
+            brandsDatabase.push(newBrand);
+            displayBrands(brandsDatabase);
+        }
+    </script>
+</body>
+</html>
